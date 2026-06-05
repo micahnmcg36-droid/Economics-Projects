@@ -1,0 +1,44 @@
+
+clear
+cd "C:\Users\mtneffmcgready\Downloads"
+use "workfile_china.dta", clear
+
+egen state_wt = total(timepwt48), by(state yr)
+gen cz_state_share = timepwt48/state_wt
+gen rest_of_state = 1 - cz_state_share
+gen midatlx_1 = reg_midatl*d_tradeusch_pw
+gen encenx_1 = reg_encen*d_tradeusch_pw
+gen wncenx_1 = reg_wncen*d_tradeusch_pw
+gen satlx_1 = reg_satl*d_tradeusch_pw
+gen escenx_1 = reg_escen*d_tradeusch_pw
+gen wscenx_1 = reg_wscen*d_tradeusch_pw
+gen mountx_1 = reg_mount*d_tradeusch_pw
+gen pacifx_1 = reg_pacif*d_tradeusch_pw
+gen rest_of_statex_1 = rest_of_state*d_tradeusch_pw
+gen midatlx_2 = reg_midatl*d_tradeotch_pw_lag
+gen encenx_2 = reg_encen*d_tradeotch_pw_lag
+gen wncenx_2 = reg_wncen*d_tradeotch_pw_lag
+gen satlx_2 = reg_satl*d_tradeotch_pw_lag
+gen escenx_2 = reg_escen*d_tradeotch_pw_lag
+gen wscenx_2 = reg_wscen*d_tradeotch_pw_lag
+gen mountx_2 = reg_mount*d_tradeotch_pw_lag
+gen pacifx_2 = reg_pacif*d_tradeotch_pw_lag
+gen rest_of_statex_2 = rest_of_state*d_tradeotch_pw_lag
+
+
+
+reg lnchg_popworkage midatlx_1 encenx_1 wncenx_1 satlx_1 escenx_1 wscenx_1 mountx_1 pacifx_1 d_tradeusch_pw l_sh_popfborn l_popcount t2 i.statefip, robust
+
+reg lnchg_popworkage_age1634 midatlx_1 encenx_1 wncenx_1 satlx_1 escenx_1 wscenx_1 mountx_1 pacifx_1 d_tradeusch_pw l_sh_popfborn l_popcount t2 i.statefip, robust
+
+reg lnchg_popworkage d_tradeusch_pw l_sh_popfborn l_popcount rest_of_state rest_of_statex_1 t2 i.statefip, robust
+
+reg lnchg_popworkage midatlx_2 encenx_2 wncenx_2 satlx_2 escenx_2 wscenx_2 mountx_2 pacifx_2 d_tradeotch_pw_lag l_sh_popfborn l_popcount t2 i.statefip, robust
+
+reg lnchg_popworkage_age1634 midatlx_2 encenx_2 wncenx_2 satlx_2 escenx_2 wscenx_2 mountx_2 pacifx_2 d_tradeotch_pw_lag l_sh_popfborn l_popcount t2 i.statefip, robust
+
+reg lnchg_popworkage d_tradeotch_pw_lag l_sh_popfborn l_popcount rest_of_state rest_of_statex_2 t2 i.statefip, robust
+
+
+
+
